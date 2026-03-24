@@ -60,7 +60,7 @@ left join {$g5['crm_design']} b on a.pg_des_idx = b.design_idx
 left join {$g5['crm_depart']} c on a.pg_deptno = c.deptno 
 left join {$g5['member_table']} d on a.pg_mb_emp = d.mb_no and d.mb_gubun != 'E'
 left join {$g5['crm_partner']} e on a.pg_ptn_idx = e.ptn_idx 
-left join (select land_pg_idx, count(*) as db_cnt from gnp_crm_landing where use_yn = 'y' group by land_pg_idx) sub on a.page_idx = sub.land_pg_idx
+left join (select land_pg_idx, count(*) as db_cnt from {$g5['crm_landing']} where use_yn = 'y' group by land_pg_idx) sub on a.page_idx = sub.land_pg_idx
 ";
 
 $sql_search = "

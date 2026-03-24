@@ -121,7 +121,7 @@ if ($act_button === "연락처저장") {
     $land_idx = sql_insert_id();
 
     $update_sql = "
-    update gnp_crm_sms set
+    update {$g5['crm_sms']} set
       sms_used_yn = 'Y'
     where sms_phone = CONVERT(AES_DECRYPT(UNHEX('{$tel}'), 'withus_secret_key') USING UTF8) 
     and sms_pg_no = {$result['page_idx']}
@@ -135,9 +135,9 @@ if ($act_button === "엑셀다운") {
     $sql = "
     select  a.*
           , b.pg_uri
-          , (select count(*) from gnp_crm_landing sub where sub.tel = a.sms_phone) as cnt
-      from gnp_crm_sms a
-      left join gnp_crm_page b on a.sms_pg_no = b.page_idx and b.use_yn = 'Y'
+          , (select count(*) from {$g5['crm_landing']} sub where sub.tel = a.sms_phone) as cnt
+      from {$g5['crm_sms']} a
+      left join {$g5['crm_page']} b on a.sms_pg_no = b.page_idx and b.use_yn = 'Y'
       where 1=1
       and sms_deptno = {$member['mb_deptno']}
       and a.sms_gubun = 1
@@ -242,7 +242,7 @@ else {
 
             // sms 정지 로직
             $sms_sql = "
-            update gnp_crm_landing_sms set 
+            update {$g5['crm_landing_sms']} set 
                   result_yn = NULL
             where land_idx = {$land_idx}
             ";
@@ -274,7 +274,7 @@ else {
 
             // sms 정지 로직
             $sms_sql = "
-            update gnp_crm_landing_sms set 
+            update {$g5['crm_landing_sms']} set 
                   result_yn = NULL
             where land_idx = {$land_idx}
             ";

@@ -88,21 +88,21 @@ $result = sql_query($sql, false);
 /* ---------------------------------- */
 /* 5.page  */
 /* ---------------------------------- */
-// $sql = "ALTER TABLE ".$table_prefix."crm_page ADD CONSTRAINT gnp_crm_page_FK FOREIGN KEY (pg_deptno) REFERENCES ".$table_prefix."crm_depart(deptno) ON DELETE CASCADE ON UPDATE CASCADE";
+// $sql = "ALTER TABLE ".$table_prefix."crm_page ADD CONSTRAINT {$g5['crm_page']}_FK FOREIGN KEY (pg_deptno) REFERENCES ".$table_prefix."crm_depart(deptno) ON DELETE CASCADE ON UPDATE CASCADE";
 
-$sql = "ALTER TABLE ".$table_prefix."crm_page ADD CONSTRAINT gnp_crm_page_FK FOREIGN KEY (pg_deptno) REFERENCES ".$table_prefix."crm_depart(deptno)";
+$sql = "ALTER TABLE ".$table_prefix."crm_page ADD CONSTRAINT {$g5['crm_page']}_FK FOREIGN KEY (pg_deptno) REFERENCES ".$table_prefix."crm_depart(deptno)";
 $result = sql_query($sql, false);
 
-$sql = "ALTER TABLE ".$table_prefix."crm_page ADD CONSTRAINT gnp_crm_page_FK_1 FOREIGN KEY (pg_ptn_idx) REFERENCES ".$table_prefix."crm_partner(ptn_idx)";
+$sql = "ALTER TABLE ".$table_prefix."crm_page ADD CONSTRAINT {$g5['crm_page']}_FK_1 FOREIGN KEY (pg_ptn_idx) REFERENCES ".$table_prefix."crm_partner(ptn_idx)";
 $result = sql_query($sql, false);
 
-$sql = "ALTER TABLE ".$table_prefix."crm_page ADD CONSTRAINT gnp_crm_page_FK_2 FOREIGN KEY (pg_des_idx) REFERENCES ".$table_prefix."crm_design(design_idx)";
+$sql = "ALTER TABLE ".$table_prefix."crm_page ADD CONSTRAINT {$g5['crm_page']}_FK_2 FOREIGN KEY (pg_des_idx) REFERENCES ".$table_prefix."crm_design(design_idx)";
 $result = sql_query($sql, false);
 
-$sql = "ALTER TABLE ".$table_prefix."crm_page ADD CONSTRAINT gnp_crm_page_FK_3 FOREIGN KEY (pg_mb_emp) REFERENCES ".$table_prefix."member(mb_no)";
+$sql = "ALTER TABLE ".$table_prefix."crm_page ADD CONSTRAINT {$g5['crm_page']}_FK_3 FOREIGN KEY (pg_mb_emp) REFERENCES ".$table_prefix."member(mb_no)";
 $result = sql_query($sql, false);
 
-$sql = "ALTER TABLE ".$table_prefix."crm_page ADD CONSTRAINT gnp_crm_page_FK_4 FOREIGN KEY (pg_mb_ptn) REFERENCES ".$table_prefix."member(mb_no)";
+$sql = "ALTER TABLE ".$table_prefix."crm_page ADD CONSTRAINT {$g5['crm_page']}_FK_4 FOREIGN KEY (pg_mb_ptn) REFERENCES ".$table_prefix."member(mb_no)";
 $result = sql_query($sql, false);
 
 $sql = "CREATE INDEX ".$table_prefix."crm_page_pg_uri_IDX USING BTREE ON ".$table_prefix."crm_page (pg_uri,pg_domain);";

@@ -170,7 +170,7 @@ if ($act === "modal-excel-down1") {
   $mb_deptno = $member['mb_deptno'];
 
   $ban_ip_sql = "
-  insert into gnp_crm_banip (ban_ip,ban_deptno,insert_date,insert_user,insert_user_name) values
+  insert into {$g5['crm_banip']} (ban_ip,ban_deptno,insert_date,insert_user,insert_user_name) values
   ('{$ip}',{$mb_deptno},now(),'{$member['mb_id']}','{$member['mb_name']}');
   ";
 
@@ -347,7 +347,7 @@ if ($act === "modal-excel-down1") {
 
   $sql = "
   select *
-    from gnp_crm_page 
+    from {$g5['crm_page']} 
   where pg_uri IN {$pg_uri_in_clause}
   {$dyn_cond}
   ";
@@ -361,9 +361,9 @@ if ($act === "modal-excel-down1") {
   select  a.*
         , b.pg_uri
         , coalesce(c.cnt, 0) AS cnt
-    from gnp_crm_sms a
-    left join gnp_crm_page b on a.sms_pg_no = b.page_idx and b.use_yn = 'Y'
-    left join ( select tel, count(*) as cnt from gnp_crm_landing group by tel ) c on a.sms_phone = c.tel
+    from {$g5['crm_sms']} a
+    left join {$g5['crm_page']} b on a.sms_pg_no = b.page_idx and b.use_yn = 'Y'
+    left join ( select tel, count(*) as cnt from {$g5['crm_landing']} group by tel ) c on a.sms_phone = c.tel
     where 1=1
     and sms_deptno = {$member['mb_deptno']}
     and a.sms_gubun = 1
@@ -389,7 +389,7 @@ echo json_encode($result);
   $sms_idx = isset($_POST['sms_idx']) ? strip_tags($_POST['sms_idx']) : '';
 
   $update_sql = "
-  update gnp_crm_sms set
+  update {$g5['crm_sms']} set
      sms_confirm_yn = 'D'
    , sms_used_yn = 'D'
   where sms_idx = '{$sms_idx}'
@@ -404,7 +404,7 @@ echo json_encode($result);
   $sql = "
   select ban_ip
        , insert_date
-    from gnp_crm_banip 
+    from {$g5['crm_banip']} 
     where ban_deptno = {$member['mb_deptno']}
     order by ban_idx desc
   ";
@@ -423,7 +423,7 @@ echo json_encode($result);
   $ip = isset($_POST['ip']) ? strip_tags($_POST['ip']) : '';
 
   $cancle_sql = "
-  delete from gnp_crm_banip where ban_ip = '{$ip}' and ban_deptno = {$member['mb_deptno']}
+  delete from {$g5['crm_banip']} where ban_ip = '{$ip}' and ban_deptno = {$member['mb_deptno']}
   ";
   $cancle = sql_query($cancle_sql);
   echo json_encode('cancle');
@@ -436,8 +436,8 @@ echo json_encode($result);
 
   $sql = "
   select a.sms_bigo
-    from gnp_crm_sms a
-    left join gnp_crm_page b on a.sms_pg_no = b.page_idx and b.use_yn = 'Y'
+    from {$g5['crm_sms']} a
+    left join {$g5['crm_page']} b on a.sms_pg_no = b.page_idx and b.use_yn = 'Y'
     where 1=1
     and a.sms_deptno = {$member['mb_deptno']} 
     and a.sms_phone = '{$tel}'
@@ -479,7 +479,7 @@ echo json_encode($result);
   isSqlError(sql_query($upd_sql), $upd_sql);
 
   $upd_sql2 = "
-  update gnp_crm_landing_sms set 
+  update {$g5['crm_landing_sms']} set 
         result_yn = NULL
   where land_idx = {$land_idx}
   and result_yn = 'N'
@@ -498,7 +498,7 @@ echo json_encode($result);
   //     from (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as a
   //     cross join (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as b
   //     cross join (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as c) a
-  // left join (select date(insert_date) as date, count(*) as count from gnp_crm_landing where insert_date >= curdate() - interval 7 day and land_ptn_idx = {$ptn_idx} and use_yn = 'Y' group by date(insert_date)) b on a.date = b.date where a.date > curdate() - interval 7 day
+  // left join (select date(insert_date) as date, count(*) as count from {$g5['crm_landing']} where insert_date >= curdate() - interval 7 day and land_ptn_idx = {$ptn_idx} and use_yn = 'Y' group by date(insert_date)) b on a.date = b.date where a.date > curdate() - interval 7 day
   // order by a.date
   // ";
 
@@ -522,7 +522,7 @@ echo json_encode($result);
   ) a
   left join (
     select date(insert_date) as date, count(*) as count
-    from gnp_crm_landing
+    from {$g5['crm_landing']}
     where land_ptn_idx = {$ptn_idx}
       and insert_date >= curdate() - interval 6 day
       and use_yn = 'Y'
@@ -574,7 +574,7 @@ echo json_encode($result);
 
   $sql = "
   select *
-    from gnp_crm_db_file a
+    from {$g5['crm_db_file']} a
     where 1=1
     and db_land_idx = {$land_idx} 
   ";
@@ -592,7 +592,7 @@ echo json_encode($result);
   }
 
   $delete_sql = "
-  delete from gnp_crm_db_file where db_land_idx = '{$land_idx}' 
+  delete from {$g5['crm_db_file']} where db_land_idx = '{$land_idx}' 
   ";
   $delete = sql_query($delete_sql);
 
@@ -671,7 +671,7 @@ echo json_encode($result);
 
     // DB SMS 로그 기록
     $sql = "
-    insert into gnp_crm_sms (
+    insert into {$g5['crm_sms']} (
           sms_gubun, sms_phone, sms_code, sms_deptno, sms_pg_no
         , sms_result_code, sms_msg_id, sms_send_msg, sms_send_log
         , insert_date, insert_date2, client_ip

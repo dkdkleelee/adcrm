@@ -314,7 +314,7 @@ if (is_array($data)) {
             file_put_contents('/home/withus/withusCRM/data/log/googleApi.log', "RESULT : [" . $logData . "]" . PHP_EOL, FILE_APPEND | LOCK_EX);
     
             $sql1 = "	
-            update gnp_crm_landing set 
+            update {$g5['crm_landing']} set 
               api_send_yn  = '{$api_send_yn}'
             , update_date  = now()
             , use_yn       = '$use_yn'
@@ -338,9 +338,9 @@ if (is_array($data)) {
                 , group_concat(c.mb_no) as mb_no
                 , group_concat(c.mb_hp) as mb_hp
                 , group_concat(c.mb_gubun) as mb_gubun
-            from gnp_crm_page         a
-            left join gnp_crm_partner b on a.pg_ptn_idx = b.ptn_idx
-            left join gnp_member      c on a.pg_ptn_idx = c.mb_ptnidx 
+            from {$g5['crm_page']}         a
+            left join {$g5['crm_partner']} b on a.pg_ptn_idx = b.ptn_idx
+            left join {$g5['member_table']}      c on a.pg_ptn_idx = c.mb_ptnidx 
             where a.page_idx = {$page_idx}
             ";
 
@@ -455,7 +455,7 @@ if (is_array($data)) {
                 $sms_msg_id_value = ($sms_msg_id !== "") ? $sms_msg_id : NULL;
 
                 $sql = "
-                insert into gnp_crm_sms (
+                insert into {$g5['crm_sms']} (
                       sms_gubun
                     , sms_phone
                     , sms_code
@@ -577,8 +577,8 @@ function existByPtn($ptn_idx, $tel) {
          , a.insert_date 
          , a.inflow_path 
          , count(*) as as_cnt 
-    from gnp_crm_landing a
-    left join gnp_crm_page b on a.land_pg_idx = b.page_idx
+    from {$g5['crm_landing']} a
+    left join {$g5['crm_page']} b on a.land_pg_idx = b.page_idx
     where b.pg_ptn_idx = {$ptn_idx}
     and a.tel = HEX(AES_ENCRYPT('{$tel}', 'withus_secret_key'))
     and a.use_yn = 'Y'

@@ -30,7 +30,7 @@ $sql_columns = "
 , a.update_date 
 , a.update_user_name
 , ifnull(a.ptn_endday between curdate() and date_add(curdate(), interval 7 day) , 2) as duedate
-, (select count(*) from gnp_crm_db_share sub where a.ptn_idx = sub.share_parent_ptn) as share_cnt
+, (select count(*) from {$g5['crm_db_share']} sub where a.ptn_idx = sub.share_parent_ptn) as share_cnt
 , COALESCE(db_tot_cnt.db_tot_cnt, 0) AS db_tot_cnt
 , COALESCE(db_tody_cnt.db_tody_cnt, 0) AS db_tody_cnt
 , (select count(*) from {$g5['crm_page']} where pg_ptn_idx = ptn_idx) as page_cnt
@@ -70,23 +70,23 @@ LEFT JOIN (
 // , a.update_date 
 // , a.update_user_name
 // , ifnull(a.ptn_endday between curdate() and date_add(curdate(), interval 7 day) , 2) as duedate
-// , (select count(*) from gnp_crm_db_share sub where a.ptn_idx = sub.share_parent_ptn) as share_cnt
-// -- , (select count(*) from gnp_crm_landing land where a.ptn_idx = land.land_ptn_idx and land.use_yn = 'Y') as db_tot_cnt
-// -- , (select count(*) from gnp_crm_landing land where a.ptn_idx = land.land_ptn_idx and land.use_yn = 'Y' and land.insert_date2 = curdate()) as db_tody_cnt
+// , (select count(*) from {$g5['crm_db_share']} sub where a.ptn_idx = sub.share_parent_ptn) as share_cnt
+// -- , (select count(*) from {$g5['crm_landing']} land where a.ptn_idx = land.land_ptn_idx and land.use_yn = 'Y') as db_tot_cnt
+// -- , (select count(*) from {$g5['crm_landing']} land where a.ptn_idx = land.land_ptn_idx and land.use_yn = 'Y' and land.insert_date2 = curdate()) as db_tody_cnt
 // , d.cnt as db_tot_cnt
 // , e.cnt as db_tody_cnt
-// from gnp_crm_partner     a
-// left join gnp_crm_depart b on a.ptn_deptno = b.deptno
-// left join gnp_member     c on a.ptn_mb_emp = c.mb_no
+// from {$g5['crm_partner']}     a
+// left join {$g5['crm_depart']} b on a.ptn_deptno = b.deptno
+// left join {$g5['member_table']}     c on a.ptn_mb_emp = c.mb_no
 // left join 
 //    (select land_ptn_idx, count(*) cnt 
-// 	  from gnp_crm_landing
+// 	  from {$g5['crm_landing']}
 // 	 where use_yn = 'Y'
 // 	 group by land_ptn_idx) d
 // on d.land_ptn_idx = a.ptn_idx
 // left join
 //    (select land_ptn_idx, count(*) cnt 
-// 	  from gnp_crm_landing
+// 	  from {$g5['crm_landing']}
 // 	 where use_yn = 'Y'
 // 	   and land_ptn_idx is not null
 // 	   and insert_date between curdate() and date_add(curdate(), interval 1 day)

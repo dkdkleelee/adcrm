@@ -223,7 +223,7 @@ if ($act === "commonCode") {
     } else {
         $resultOneSql = "
             select *
-            from gnp_crm_whiteip
+            from {$g5['crm_whiteip']}
             where insert_user = '{$member['mb_id']}'
             and temp_yn = 'Y'
             and now() between start_date and end_date;
@@ -242,7 +242,7 @@ if ($act === "commonCode") {
             $toDate = $expirationDate->format('Y-m-d H:i:s');
 
             $upd_sql = "
-            update gnp_crm_whiteip set 
+            update {$g5['crm_whiteip']} set 
                 white_ip = '{$inpWhiteIp}'
                 ,start_date = now()
                 ,end_date = '{$toDate}'
@@ -269,7 +269,7 @@ if ($act === "commonCode") {
             $toDate = $expirationDate->format('Y-m-d H:i:s');
 
             $ins_sql = "
-            insert into gnp_crm_whiteip (white_ip,start_date,end_date,insert_user,insert_user_name,temp_yn) values
+            insert into {$g5['crm_whiteip']} (white_ip,start_date,end_date,insert_user,insert_user_name,temp_yn) values
             ('{$inpWhiteIp}',now(),'{$toDate}','{$mb_id}','{$mb_name}','Y');
             ";
 

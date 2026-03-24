@@ -88,7 +88,7 @@ if($act_button == "카피") {
     
 
     $page_copy_sql = "
-    INSERT INTO gnp_crm_page
+    INSERT INTO {$g5['crm_page']}
     SELECT null
 		 , '$pg_uri'
 		 , pg_domain
@@ -163,7 +163,7 @@ if($act_button == "카피") {
          , '$mb_id'
          , '$mb_name'
          , '$mb_name'
-    FROM gnp_crm_page
+    FROM {$g5['crm_page']}
     WHERE page_idx = {$page_idx};
     ";
     isSqlError(sql_query($page_copy_sql), $page_copy_sql);
@@ -952,8 +952,8 @@ fclose($myfile);
         
         $isExistShareSql = "
         select b.ptn_nm 
-        from gnp_crm_db_share a 
-        left join gnp_crm_partner b on a.share_parent_ptn = b.ptn_idx  
+        from {$g5['crm_db_share']} a 
+        left join {$g5['crm_partner']} b on a.share_parent_ptn = b.ptn_idx  
         where share_parent_ptn = {$pg_ptn_idx}
         ";
         $shared_ptn_nm = sql_fetch($isExistShareSql);

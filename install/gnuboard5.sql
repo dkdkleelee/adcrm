@@ -1254,7 +1254,7 @@ CREATE TABLE `g5_crm_dbhist` (
 
 
 
-CREATE TABLE `gnp_crm_api_resv` (
+CREATE TABLE `{$g5['crm_api_resv']}` (
   `resv_idx` int(11) NOT NULL AUTO_INCREMENT,
   `resv_auth_idx` varchar(100) DEFAULT NULL,
   `resv_page_idx` int(11) DEFAULT NULL,
@@ -1268,7 +1268,7 @@ CREATE TABLE `gnp_crm_api_resv` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-CREATE TABLE `gnp_crm_api_send` (
+CREATE TABLE `{$g5['crm_api_send']}` (
   `api_idx` int(11) NOT NULL AUTO_INCREMENT,
   `land_idx` int(11) DEFAULT NULL,
   `land_pg_idx` int(11) DEFAULT NULL,
@@ -1290,7 +1290,7 @@ CREATE TABLE `gnp_crm_api_send` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-CREATE TABLE `gnp_crm_api_auth` (
+CREATE TABLE `{$g5['crm_api_auth']}` (
   `auth_idx` int(11) NOT NULL AUTO_INCREMENT,
   `auth_ip` varchar(255) NOT NULL DEFAULT '',
   `auth_comp` varchar(100) DEFAULT NULL,

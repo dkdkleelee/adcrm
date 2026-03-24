@@ -202,10 +202,10 @@ if($w == "u") {
        , b.pg_uri 
        , c.ptn_nm 
        , a.*
-       , (select pg_uri from gnp_crm_page sub where page_idx = share_parent_page_idx) as parent_pg_uri
-  from gnp_crm_db_share a
-  left join gnp_crm_page b on a.share_child_page_idx = b.page_idx 
-  left join gnp_crm_partner c on a.share_child_ptn = c.ptn_idx 
+       , (select pg_uri from {$g5['crm_page']} sub where page_idx = share_parent_page_idx) as parent_pg_uri
+  from {$g5['crm_db_share']} a
+  left join {$g5['crm_page']} b on a.share_child_page_idx = b.page_idx 
+  left join {$g5['crm_partner']} c on a.share_child_ptn = c.ptn_idx 
   where share_parent_ptn = {$ptn_idx}
   order by share_no asc
   ";
@@ -276,15 +276,15 @@ if($w == "u") {
       $partner_sql = "
       select distinct ptn_idx
            , a.ptn_nm   
-      from gnp_crm_partner a
-      left join gnp_crm_page b on a.ptn_idx = b.pg_ptn_idx 
+      from {$g5['crm_partner']} a
+      left join {$g5['crm_page']} b on a.ptn_idx = b.pg_ptn_idx 
       where b.pg_deptno = {$member['mb_deptno']}
       and a.use_yn = 'Y'
       and b.use_yn = 'Y'
       and a.ptn_idx != {$ptn_idx}
       and not exists (
           select 1
-          from gnp_crm_db_share c
+          from {$g5['crm_db_share']} c
           where c.share_parent_ptn = a.ptn_idx
       )
       order by a.ptn_nm

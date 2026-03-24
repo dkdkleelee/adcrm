@@ -121,7 +121,7 @@ if ($w == '') {
     $aft_pop_files = [];
     if ($resultOne['pg_aft_ad_yn'] == 'Y') {
         $aft_files_res = sql_query("
-            SELECT * FROM gnp_crm_aft_ad_file
+            SELECT * FROM {$g5['crm_aft_ad_file']}
             WHERE page_idx = '{$page_idx}'
             ORDER BY sort_order ASC, file_idx ASC
         ");
@@ -172,7 +172,7 @@ if ($w == '') {
     //is parent share check
     $shared_sql = "
     select b.ptn_nm, a.*
-    from gnp_crm_db_share a
+    from {$g5['crm_db_share']} a
     left join {$g5['crm_partner']} b on a.share_parent_ptn = b.ptn_idx
     where (share_parent_page_idx = {$page_idx} or share_child_page_idx = {$page_idx})
     limit 0,1

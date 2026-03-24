@@ -85,9 +85,9 @@ select a.page_idx
      , c.deptnm 
      , ifnull (f_get_mb_name(a.pg_mb_emp), a.pg_mb_emp) as mb_emp_name
      , a.insert_date
-  from gnp_crm_page a
-  left join gnp_crm_design b on a.pg_des_idx = b.design_idx 
-  left join gnp_crm_depart c on a.pg_deptno = c.deptno 
+  from {$g5['crm_page']} a
+  left join {$g5['crm_design']} b on a.pg_des_idx = b.design_idx 
+  left join {$g5['crm_depart']} c on a.pg_deptno = c.deptno 
  where b.design_idx = {$design_idx}
  order by a.page_idx desc
     ";

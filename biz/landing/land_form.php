@@ -117,7 +117,7 @@ if ($w == '') {
 }
 
 
-$sql = "SELECT * FROM gnp_crm_db_file WHERE db_land_idx = {$land_idx}";
+$sql = "SELECT * FROM {$g5['crm_db_file']} WHERE db_land_idx = {$land_idx}";
 $result = sql_query($sql);
 $file_list = array();
 while ($row = sql_fetch_array($result)) {

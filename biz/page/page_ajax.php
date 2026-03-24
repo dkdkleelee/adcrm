@@ -303,7 +303,7 @@ else if ($act === "delete_aft_pop_img") {
     $page_idx = (int)$_POST['page_idx'];
     $file_idx = (int)$_POST['file_idx'];
 
-    $sql = " select file_name from gnp_crm_aft_ad_file where file_idx = '$file_idx' and page_idx = '$page_idx' ";
+    $sql = " select file_name from {$g5['crm_aft_ad_file']} where file_idx = '$file_idx' and page_idx = '$page_idx' ";
     $row = sql_fetch($sql);
 
     if ($row['file_name']) {
@@ -312,9 +312,9 @@ else if ($act === "delete_aft_pop_img") {
         @unlink($path);
 
         // DB 삭제
-        sql_query(" delete from gnp_crm_aft_ad_file where file_idx = '$file_idx' ");
+        sql_query(" delete from {$g5['crm_aft_ad_file']} where file_idx = '$file_idx' ");
         // 메인 테이블 인덱스 업데이트
-        sql_query(" update gnp_crm_page set pg_aft_ad_file_idx = 0 where page_idx = '$page_idx' ");
+        sql_query(" update {$g5['crm_page']} set pg_aft_ad_file_idx = 0 where page_idx = '$page_idx' ");
 
         echo json_encode(array("status" => "success"));
     } else {

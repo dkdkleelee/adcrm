@@ -269,7 +269,7 @@ else if ($act === "modalListPtnEmp") {
     where use_yn = 'Y'
     and pg_deptno = {$member['mb_deptno']}
     and pg_ptn_idx = {$ptn_idx}
-    and not exists (select 1 from gnp_crm_db_share b where a.page_idx = b.share_parent_page_idx) 
+    and not exists (select 1 from {$g5['crm_db_share']} b where a.page_idx = b.share_parent_page_idx) 
     order by page_idx desc
     ";
     $code_list = sql_query($code_sql);
@@ -299,7 +299,7 @@ else if ($act === "modalListPtnEmp") {
   
     $delSql = "
     delete 
-    from gnp_crm_db_share
+    from {$g5['crm_db_share']}
     where share_parent_ptn = {$ptn_idx}
     ";
     isSqlError(sql_query($delSql), $delSql);

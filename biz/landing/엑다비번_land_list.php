@@ -268,7 +268,7 @@ if($member['mb_level'] >= 5) {
 $emp_sql = "
 select mb_no
      , mb_name
-     , ifnull((select count(*) from gnp_crm_landing sub where a.mb_no = sub.land_empno and sub.use_yn = 'Y' and insert_date2 = curdate() group by land_empno) ,0) as today_cnt
+     , ifnull((select count(*) from {$g5['crm_landing']} sub where a.mb_no = sub.land_empno and sub.use_yn = 'Y' and insert_date2 = curdate() group by land_empno) ,0) as today_cnt
 from {$g5['member_table']} a
 where 1=1
 and is_login = 'Y'
@@ -307,8 +307,8 @@ if($sfl == "ptn_idx") {
         , a.page_idx
         , b.ptn_idx
         , a.pg_uri
-    from gnp_crm_page a
-    left join gnp_crm_partner b on a.pg_ptn_idx = b.ptn_idx
+    from {$g5['crm_page']} a
+    left join {$g5['crm_partner']} b on a.pg_ptn_idx = b.ptn_idx
     where a.page_idx is not null
         and b.ptn_idx is not null
         and b.ptn_idx != {$stx}

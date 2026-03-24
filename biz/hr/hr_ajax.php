@@ -78,7 +78,7 @@ else if ($act === "sign_one_dele") {
          , IFNULL(sum(b.vaca_calc), 0) as used_cnt
          , a.mb_vaca_cnt - IFNULL(sum(b.vaca_calc), 0) as remain_cnt
     from {$g5['member_table']} a
-    left join gnp_crm_vaca_mng AS b ON a.mb_no = b.vaca_mb_no and b.vaca_status = 2 and year(b.vaca_end_date) = year(curdate())
+    left join {$g5['crm_vaca_mng']} AS b ON a.mb_no = b.vaca_mb_no and b.vaca_status = 2 and year(b.vaca_end_date) = year(curdate())
     where mb_no = '{$member['mb_no']}'
     group by a.mb_no, a.mb_vaca_cnt
     ";
@@ -87,7 +87,7 @@ else if ($act === "sign_one_dele") {
     
     $lstSql = "
         select a.*
-        from gnp_crm_vaca_mng a
+        from {$g5['crm_vaca_mng']} a
         where vaca_mb_no = {$member['mb_no']}
         and vaca_code != 5
         and year(vaca_end_date) = year(curdate())
@@ -166,14 +166,14 @@ else if ($act === "sign_one_dele") {
         a.vaca_status,
         concat(a.vaca_mb_name, a.vaca_name
         ,' (月',(select sum(case when vaca_code = '1' and vaca_status = 2 then 1 when vaca_code in ('2', '3') then 0.5 else 0 end)
-        from gnp_crm_vaca_mng sub
+        from {$g5['crm_vaca_mng']} sub
         where sub.vaca_mb_no = a.vaca_mb_no 
         and year(sub.vaca_end_date) = year(a.vaca_end_date)
         and month(sub.vaca_end_date) = month(a.vaca_end_date)
         and sub.vaca_end_date >= date_format(a.vaca_end_date, '%y-%m-01')
         and sub.vaca_idx <= a.vaca_idx),')','[年',
         (select sum(case when vaca_code = '1' and vaca_status = 2 then 1 when vaca_code in ('2', '3') then 0.5 else 0 end)
-        from gnp_crm_vaca_mng sub
+        from {$g5['crm_vaca_mng']} sub
         where sub.vaca_mb_no = a.vaca_mb_no 
         and year(sub.vaca_end_date) = year(a.vaca_end_date)
         and sub.vaca_idx <= a.vaca_idx),']'
@@ -181,7 +181,7 @@ else if ($act === "sign_one_dele") {
         a.vaca_code,
         a.vaca_start_date,
         a.vaca_end_date
-    from gnp_crm_vaca_mng a
+    from {$g5['crm_vaca_mng']} a
     where a.vaca_end_date between '{$start}' and '{$end}'
     and a.vaca_status != 3
     {$add_cond}
@@ -248,14 +248,14 @@ else if ($act === "sign_one_dele") {
 
     if($buttonType == "9") {
         $upd_sql = "
-        delete from gnp_crm_vaca_mng
+        delete from {$g5['crm_vaca_mng']}
         where vaca_idx = {$vaca_idx}
         ";
         $result1 = sql_query($upd_sql);
     } else {
         //flag값 변경
         $upd_sql = "
-        update gnp_crm_vaca_mng set
+        update {$g5['crm_vaca_mng']} set
         vaca_status = '{$buttonType}'
       , manager_comment = '{$manager_comment}'
         where vaca_idx = {$vaca_idx}
@@ -319,7 +319,7 @@ else if ($act === "sign_one_dele") {
          , vaca_comment
          , if(a.manager_comment is null or a.manager_comment = '', '미입력상태', a.manager_comment) as manager_comment
          , sum(vaca_calc) over(partition by year(vaca_end_date) order by vaca_end_date asc) as year_cnt
-    from gnp_crm_vaca_mng a
+    from {$g5['crm_vaca_mng']} a
     where vaca_mb_no = {$vaca_mb_no}
     and vaca_status = 2
     order by vaca_end_date desc
@@ -344,8 +344,8 @@ else if ($act === "sign_one_dele") {
 
     $meet_sql = "
     select meet_idx, meet_mb_no, meet_mb_deptno, meet_startday, meet_endday, meet_reason, insert_date, update_date, insert_user, update_user, insert_user_name, update_user_name, b.mb_name 
-    from gnp_crm_meet_mng a
-    left join gnp_member b on a.meet_mb_no = b.mb_no 
+    from {$g5['crm_meet_mng']} a
+    left join {$g5['member_table']} b on a.meet_mb_no = b.mb_no 
     where meet_endday between '{$start}' and '{$end}'
     ";
 
@@ -393,7 +393,7 @@ else if ($act === "sign_one_dele") {
     $meet_idx = isset($_POST['meet_idx']) ? strip_tags($_POST['meet_idx']) : '';
 
     $del_sql = "
-    delete from gnp_crm_meet_mng where meet_idx = {$meet_idx}
+    delete from {$g5['crm_meet_mng']} where meet_idx = {$meet_idx}
     ";
     $result = sql_query($del_sql);
 
@@ -439,8 +439,8 @@ else if ($act === "sign_one_dele") {
     
     $resultOneSql = "
     select meet_idx, meet_mb_no, meet_mb_deptno, meet_startday, meet_endday, meet_reason, insert_date, update_date, insert_user, update_user, insert_user_name, update_user_name, b.mb_name 
-    from gnp_crm_meet_mng a
-    left join gnp_member b on a.meet_mb_no = b.mb_no 
+    from {$g5['crm_meet_mng']} a
+    left join {$g5['member_table']} b on a.meet_mb_no = b.mb_no 
     WHERE ('{$fromDateTime}' < meet_endday AND '{$toDateTime}' > meet_startday)
     ";
     $resultOne = sql_fetch($resultOneSql);
@@ -460,7 +460,7 @@ else if ($act === "sign_one_dele") {
     $manager_comment = isset($_POST['comment']) ? strip_tags($_POST['comment']) : '';
 
     $upd_sql = "
-    update gnp_crm_vaca_mng set
+    update {$g5['crm_vaca_mng']} set
     manager_comment = '{$manager_comment}'
     where vaca_idx = {$vaca_idx}
     ";

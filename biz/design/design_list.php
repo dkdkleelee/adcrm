@@ -42,7 +42,7 @@ $sql_columns = "
 , a.insert_date
 , a.update_date
 , a.update_user_name
-, (select count(*) from gnp_crm_page page where a.design_idx = page.pg_des_idx) as used_pg_cnt
+, (select count(*) from {$g5['crm_page']} page where a.design_idx = page.pg_des_idx) as used_pg_cnt
 ";
 
 $sql_common = "

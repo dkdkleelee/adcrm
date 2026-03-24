@@ -82,8 +82,8 @@ $rownum = $total_count - $from_record;
 $emp_sql = "
 select mb_no
      , concat(b.deptnm , ' > ',  mb_name) as mb_name  
-  from gnp_member a
-  left join gnp_crm_depart b on a.mb_deptno = b.deptno  
+  from {$g5['member_table']} a
+  left join {$g5['crm_depart']} b on a.mb_deptno = b.deptno  
  where mb_deptno is not null
  order by mb_deptno asc
 ";

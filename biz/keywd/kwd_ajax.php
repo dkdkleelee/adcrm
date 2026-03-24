@@ -317,12 +317,12 @@ if ($act === "add_comp") {
 
     $lstSql = "
     select m.mb_name, c.conf_yyyymm , c.insert_date 
-    from gnp_member m
+    from {$g5['member_table']} m
     left join gnp_kwd_calc_confirm c on m.mb_no = c.conf_mb_no and c.conf_yyyymm = '{$cur_month}'
     where m.mb_deptno = 11 and c.conf_mb_no is not null
     union all
     select m2.mb_name, null, null
-    from gnp_member m2
+    from {$g5['member_table']} m2
     where m2.mb_deptno = 11
     and not exists (select 1 from gnp_kwd_calc_confirm c2 where c2.conf_mb_no = m2.mb_no and c2.conf_yyyymm = '{$cur_month}')
     order by mb_name asc;

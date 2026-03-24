@@ -15,7 +15,7 @@ if ($w == '') {
 
   $resultOneSql2 = "
     select *
-    from gnp_crm_whiteip
+    from {$g5['crm_whiteip']}
     where insert_user = '{$member['mb_id']}'
     and temp_yn = 'Y'
     and start_date <= now() 

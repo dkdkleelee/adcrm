@@ -128,7 +128,7 @@ if ($w == '') {
     //is parent share check
     $shared_sql = "
     select b.ptn_nm, a.*
-    from gnp_crm_db_share a
+    from {$g5['crm_db_share']} a
     left join {$g5['crm_partner']} b on a.share_parent_ptn = b.ptn_idx
     where (share_parent_page_idx = {$page_idx} or share_child_page_idx = {$page_idx})
     limit 0,1

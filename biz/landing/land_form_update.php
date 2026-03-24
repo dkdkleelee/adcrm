@@ -505,7 +505,7 @@ if (isset($_FILES['fileInput']) && $_FILES['fileInput']['error'] === UPLOAD_ERR_
         $land_idx = isset($_POST['land_idx']) ? (int)$_POST['land_idx'] : 0;
 
         $ins_sql = "
-        INSERT INTO gnp_crm_db_file SET
+        INSERT INTO {$g5['crm_db_file']} SET
             db_land_idx = {$land_idx},
             db_file_org_name = '{$originalFileName}',
             db_file_name = '{$newFileName}',

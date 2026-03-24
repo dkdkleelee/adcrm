@@ -54,7 +54,7 @@ $sql_columns = "
 ";
 
 $sql_common = "
-from gnp_crm_db_file a
+from {$g5['crm_db_file']} a
 left join {$g5['crm_landing']}  b on a.db_land_idx = b.land_idx 
 left join {$g5['crm_page']}     c on b.land_pg_idx = c.page_idx 
 left join {$g5['crm_design']}   d on c.pg_des_idx = d.design_idx 
@@ -120,7 +120,7 @@ if ($stx) {
 
 $cnt_sql = "
 select count(*) as cnt
-from gnp_crm_db_file a
+from {$g5['crm_db_file']} a
 left join {$g5['crm_landing']}  b on a.db_land_idx = b.land_idx 
 left join {$g5['crm_page']}     c on b.land_pg_idx = c.page_idx 
 left join {$g5['crm_design']}   d on c.pg_des_idx = d.design_idx 
@@ -172,7 +172,7 @@ if($member['mb_level'] >= 5) {
     $emp_sql = "
     select mb_no
          , mb_name
-         , ifnull((select count(*) from gnp_crm_landing sub where b.mb_no = sub.land_empno and sub.use_yn = 'E' and insert_date2 = curdate() group by land_empno) ,0) as today_cnt
+         , ifnull((select count(*) from {$g5['crm_landing']} sub where b.mb_no = sub.land_empno and sub.use_yn = 'E' and insert_date2 = curdate() group by land_empno) ,0) as today_cnt
     from {$g5['member_table']} a
     where 1=1
     and is_login = 'Y'

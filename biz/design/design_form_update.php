@@ -737,9 +737,9 @@ if (!file_exists($script_file2)) {
 
         $shared_sql="
         select count(*) as asis_cnt
-             , (select ptn_nm from gnp_crm_partner sub where sub.ptn_idx = {$pg_ptn_idx}) as ptn_nm
+             , (select ptn_nm from {$g5['crm_partner']} sub where sub.ptn_idx = {$pg_ptn_idx}) as ptn_nm
              , share_token
-          from gnp_crm_db_share 
+          from {$g5['crm_db_share']} 
          where share_parent_ptn = {$pg_ptn_idx}
          and share_parent_page_idx = {$page_idx}
         ";
@@ -761,7 +761,7 @@ if (!file_exists($script_file2)) {
 
         $partner_sql="
         select ptn_ban_phone
-          from gnp_crm_partner
+          from {$g5['crm_partner']}
          where ptn_idx = {$pg_ptn_idx}
         ";
         $partner = sql_fetch($partner_sql);

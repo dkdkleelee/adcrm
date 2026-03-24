@@ -54,8 +54,8 @@ select a.api_idx
      , b.google_addr
      , b.google_sheet
      , b.google_cell
-  from gnp_crm_api_send a
-  left join gnp_crm_page b on a.land_pg_idx = b.page_idx 
+  from {$g5['crm_api_send']} a
+  left join {$g5['crm_page']} b on a.land_pg_idx = b.page_idx 
  where 1=1
  and b.pg_api_yn = 'Y'
  and result_yn = 'N' 
@@ -418,7 +418,7 @@ if (mysqli_affected_rows($conn) > 0) {
             file_put_contents('/home/withus/withusCRM/data/log/sendApi.log', "RESULT : [" . $logData . "]" . PHP_EOL, FILE_APPEND | LOCK_EX);
 
             $sql1 = "	
-            update gnp_crm_landing set 
+            update {$g5['crm_landing']} set 
             api_send_yn  = '{$api_send_yn}'
             , update_date  = now()
             , use_yn       = '$use_yn'
@@ -427,7 +427,7 @@ if (mysqli_affected_rows($conn) > 0) {
             $result = mysqli_query($conn, $sql1);
 
             $sql2 = "	
-            update gnp_crm_api_send set 
+            update {$g5['crm_api_send']} set 
             result_yn   = 'Y'
             , api_date    = now()
             where api_idx = {$api_idx}
@@ -502,7 +502,7 @@ if (mysqli_affected_rows($conn) > 0) {
             }
 
             $sql1 = "	
-            update gnp_crm_landing set 
+            update {$g5['crm_landing']} set 
               api_send_yn  = '{$api_send_yn}'
             , update_date  = now()
             , use_yn       = '$use_yn'
@@ -511,7 +511,7 @@ if (mysqli_affected_rows($conn) > 0) {
             $result = mysqli_query($conn, $sql1);
     
             $sql2 = "	
-            update gnp_crm_api_send set 
+            update {$g5['crm_api_send']} set 
             result_yn   = 'Y'
             , api_date    = now()
             where api_idx = {$api_idx}

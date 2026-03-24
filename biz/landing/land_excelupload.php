@@ -779,7 +779,7 @@ if ($act_button === "업로드") {
 
                     //api 결과 update처리
                     $sql1 = "	
-                    update gnp_crm_landing set 
+                    update {$g5['crm_landing']} set 
                       api_send_yn  = '{$api_send_yn}'
                     , update_date  = now()
                     , use_yn       = '$use_yn'

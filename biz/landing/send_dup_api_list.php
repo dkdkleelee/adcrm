@@ -168,7 +168,7 @@ if($member['mb_level'] >= 5) {
     $emp_sql = "
     select mb_no
          , mb_name
-         , ifnull((select count(*) from gnp_crm_landing sub where a.mb_no = sub.land_empno and sub.use_yn = 'R' and insert_date2 = curdate() group by land_empno) ,0) as today_cnt
+         , ifnull((select count(*) from {$g5['crm_landing']} sub where a.mb_no = sub.land_empno and sub.use_yn = 'R' and insert_date2 = curdate() group by land_empno) ,0) as today_cnt
     from {$g5['member_table']} a
     where 1=1
     and is_login = 'Y'

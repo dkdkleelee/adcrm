@@ -171,7 +171,7 @@ if (!in_array($ip, $allowed_ips)) {
     $sms_msg_id_value = ($sms_msg_id !== "") ? $sms_msg_id : NULL;
 
     $sql = "
-    insert into gnp_crm_sms (
+    insert into {$g5['crm_sms']} (
           sms_gubun
         , sms_phone
         , sms_code

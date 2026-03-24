@@ -34,12 +34,12 @@ select a.land_sms_idx
      , b.pg_ptn_idx
      , b.pg_db_sms_msg
      , c.ptn_nm 
-     , ( select group_concat(sub.mb_no) from gnp_member sub where sub.mb_ptnidx = b.pg_ptn_idx ) as mb_no
-     , ( select group_concat(sub.mb_hp) from gnp_member sub where sub.mb_ptnidx = b.pg_ptn_idx ) as mb_hp
-     , ( select group_concat(sub.mb_gubun) from gnp_member sub where sub.mb_ptnidx = b.pg_ptn_idx ) as mb_gubun     
-  from gnp_crm_landing_sms  a
-  left join gnp_crm_page    b on a.land_pg_idx = b.page_idx  
-  left join gnp_crm_partner c on b.pg_ptn_idx = c.ptn_idx 
+     , ( select group_concat(sub.mb_no) from {$g5['member_table']} sub where sub.mb_ptnidx = b.pg_ptn_idx ) as mb_no
+     , ( select group_concat(sub.mb_hp) from {$g5['member_table']} sub where sub.mb_ptnidx = b.pg_ptn_idx ) as mb_hp
+     , ( select group_concat(sub.mb_gubun) from {$g5['member_table']} sub where sub.mb_ptnidx = b.pg_ptn_idx ) as mb_gubun     
+  from {$g5['crm_landing_sms']}  a
+  left join {$g5['crm_page']}    b on a.land_pg_idx = b.page_idx  
+  left join {$g5['crm_partner']} c on b.pg_ptn_idx = c.ptn_idx 
  where 1=1
  and a.result_yn = 'N' 
  and a.sms_date <= now()
@@ -103,7 +103,7 @@ if (mysqli_affected_rows($conn) > 0) {
 
         //crontab 기준 메시지 보낸걸로 처리하여 중복실행방지
         $sql1 = "	
-        update gnp_crm_landing_sms set 
+        update {$g5['crm_landing_sms']} set 
           result_yn   = 'Y'
         where land_sms_idx = ?
         ";
@@ -176,7 +176,7 @@ if (mysqli_affected_rows($conn) > 0) {
             error_log($sms_send_log ,3, "./send_sms.log");
 
             $sms_gubun = "2";
-            $sql = "insert into gnp_crm_sms (sms_gubun, sms_phone, sms_code, sms_deptno, sms_pg_no, sms_result_code, sms_msg_id, sms_send_msg, sms_send_log, insert_date, insert_date2, client_ip) values (?, ?, ?, ?, ?, ?, ?, ?, ?, now(), curdate(), '27.102.82.88')";
+            $sql = "insert into {$g5['crm_sms']} (sms_gubun, sms_phone, sms_code, sms_deptno, sms_pg_no, sms_result_code, sms_msg_id, sms_send_msg, sms_send_log, insert_date, insert_date2, client_ip) values (?, ?, ?, ?, ?, ?, ?, ?, ?, now(), curdate(), '27.102.82.88')";
             $stmt = $conn->prepare($sql);
 
             $result_code_value = ($result_code !== "") ? $result_code : NULL;
@@ -194,7 +194,7 @@ if (mysqli_affected_rows($conn) > 0) {
         }
 
         // DB한건 기준 List에 메시지 전송된걸로 처리함
-        $sql2 = "update gnp_crm_landing
+        $sql2 = "update {$g5['crm_landing']}
                 set sms_send_yn = 'Y'
                 where land_idx = ?";
         $stmt = $conn->prepare($sql2);

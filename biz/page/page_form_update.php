@@ -109,13 +109,13 @@ if ($pg_aft_ad_yn === 'N') {
 
     // Y → N 변경된 경우: 파일 삭제 + DB 정리
     if ($org_aft_ad_yn === 'Y') {
-        $del_file = sql_fetch(" SELECT * FROM gnp_crm_aft_ad_file WHERE page_idx = '{$page_idx}' LIMIT 0,1 ");
+        $del_file = sql_fetch(" SELECT * FROM {$g5['crm_aft_ad_file']} WHERE page_idx = '{$page_idx}' LIMIT 0,1 ");
         if (!empty($del_file['file_name'])) {
             $abs_path = G5_DATA_PATH . '/file/aftpop/' . $page_idx . '/' . $del_file['file_name'];
             @unlink($abs_path);
             @rmdir(G5_DATA_PATH . '/file/aftpop/' . $page_idx);
         }
-        sql_query(" DELETE FROM gnp_crm_aft_ad_file WHERE page_idx = '{$page_idx}' ");
+        sql_query(" DELETE FROM {$g5['crm_aft_ad_file']} WHERE page_idx = '{$page_idx}' ");
     }
 
     // UPDATE 변수 전부 기본값/NULL로 초기화
@@ -140,12 +140,12 @@ if ($pg_aft_ad_yn === 'N') {
     }
 
     // DB 기존 파일 중 keep 목록에 없는 것 삭제
-    $existing_res = sql_query(" SELECT * FROM gnp_crm_aft_ad_file WHERE page_idx = '{$page_idx}' ");
+    $existing_res = sql_query(" SELECT * FROM {$g5['crm_aft_ad_file']} WHERE page_idx = '{$page_idx}' ");
     while ($ef = sql_fetch_array($existing_res)) {
         if (!in_array((int)$ef['file_idx'], $keep_idxs)) {
             $abs = G5_DATA_PATH . '/file/aftpop/' . $page_idx . '/' . $ef['file_name'];
             @unlink($abs);
-            sql_query(" DELETE FROM gnp_crm_aft_ad_file WHERE file_idx = '{$ef['file_idx']}' ");
+            sql_query(" DELETE FROM {$g5['crm_aft_ad_file']} WHERE file_idx = '{$ef['file_idx']}' ");
         }
     }
 
@@ -172,7 +172,7 @@ if ($pg_aft_ad_yn === 'N') {
 
             if (move_uploaded_file($tmp, $aft_pop_path . '/' . $newname)) {
                 sql_query("
-                    INSERT INTO gnp_crm_aft_ad_file
+                    INSERT INTO {$g5['crm_aft_ad_file']}
                         SET page_idx    = '{$page_idx}',
                             file_source = '{$orig}',
                             file_name   = '{$newname}',
@@ -187,7 +187,7 @@ if ($pg_aft_ad_yn === 'N') {
     }
 
     // 최종 이미지 0장이면 차단
-    $final_row = sql_fetch(" SELECT COUNT(*) as cnt FROM gnp_crm_aft_ad_file WHERE page_idx = '{$page_idx}' ");
+    $final_row = sql_fetch(" SELECT COUNT(*) as cnt FROM {$g5['crm_aft_ad_file']} WHERE page_idx = '{$page_idx}' ");
     if ((int)$final_row['cnt'] === 0) {
         alert("후팝업 ON 상태에서는 이미지를 반드시 등록해야 합니다.");
         exit;
@@ -195,7 +195,7 @@ if ($pg_aft_ad_yn === 'N') {
 
     // 대표 이미지 idx (하위호환)
     $first_file = sql_fetch("
-        SELECT file_idx FROM gnp_crm_aft_ad_file
+        SELECT file_idx FROM {$g5['crm_aft_ad_file']}
         WHERE page_idx = '{$page_idx}'
         ORDER BY sort_order ASC, file_idx ASC
         LIMIT 0,1
@@ -557,7 +557,7 @@ sql_query(" SET autocommit=0 ");
 
     if ($pg_aft_ad_is_main === 'Y' && $pg_aft_ad_news_sec !== 'normal' && $pg_aft_ad_news_sec !== '') {
         sql_query("
-            UPDATE gnp_crm_page
+            UPDATE {$g5['crm_page']}
             SET pg_aft_ad_is_main = 'N'
             WHERE pg_aft_ad_news_sec = '{$pg_aft_ad_news_sec}'
             AND pg_aft_ad_is_main  = 'Y'
@@ -588,9 +588,9 @@ sql_query(" SET autocommit=0 ");
 
     $shared_sql="
     select count(*) as asis_cnt
-         , (select ptn_nm from gnp_crm_partner sub where sub.ptn_idx = {$asis_ptn}) as ptn_nm
+         , (select ptn_nm from {$g5['crm_partner']} sub where sub.ptn_idx = {$asis_ptn}) as ptn_nm
          , share_token
-      from gnp_crm_db_share 
+      from {$g5['crm_db_share']} 
      where share_parent_ptn = {$asis_ptn}
      and share_parent_page_idx = {$page_idx}
     ";
@@ -615,7 +615,7 @@ sql_query(" SET autocommit=0 ");
 
     $partner_sql="
     select ptn_ban_phone
-      from gnp_crm_partner
+      from {$g5['crm_partner']}
      where ptn_idx = {$pg_ptn_idx}
     ";
     $partner = sql_fetch($partner_sql);
@@ -710,7 +710,7 @@ sql_query(" SET autocommit=0 ");
 
     if ($pg_aft_ad_is_main === 'Y' && $pg_aft_ad_news_sec !== 'normal' && $pg_aft_ad_news_sec !== '') {
         sql_query("
-            UPDATE gnp_crm_page
+            UPDATE {$g5['crm_page']}
             SET pg_aft_ad_is_main = 'N'
             WHERE pg_aft_ad_news_sec = '{$pg_aft_ad_news_sec}'
             AND pg_aft_ad_is_main  = 'Y'

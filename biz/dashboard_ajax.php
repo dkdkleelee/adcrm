@@ -11,7 +11,7 @@ if ($act === "confirm_vaca") {
     $vaca_idx = isset($_POST['vaca_idx']) ? strip_tags($_POST['vaca_idx']) : '';
 
     $sql = "
-    update gnp_crm_vaca_mng set
+    update {$g5['crm_vaca_mng']} set
         vaca_status = '2'
     where vaca_idx = '$vaca_idx'
     ";
@@ -78,7 +78,7 @@ if ($act === "confirm_vaca") {
                 when 7 then '토'
               end, ')') as date,
        coalesce(b.count, 0) as count,
-       gnp_crm_page.pg_uri
+       {$g5['crm_page']}.pg_uri
     from (
     select curdate() - interval 6 day as date
     union all
@@ -96,14 +96,14 @@ if ($act === "confirm_vaca") {
     ) a
     left join (
     select date(insert_date) as date, land_pg_idx, count(*) as count
-    from gnp_crm_landing
+    from {$g5['crm_landing']}
     where land_ptn_idx = {$ptn_idx}
         and insert_date >= curdate() - interval 6 day
         and use_yn = 'Y'
         
     group by date(insert_date), land_pg_idx
     ) b on a.date = b.date
-    left join gnp_crm_page on gnp_crm_page.page_idx = b.land_pg_idx
+    left join {$g5['crm_page']} on {$g5['crm_page']}.page_idx = b.land_pg_idx
     where b.count > 0
     order by a.date desc
     ";
@@ -134,29 +134,29 @@ if ($act === "confirm_vaca") {
     if($utm_mode == false) {
 
         $detail_pg_uri_sql = "
-        select gnp_crm_page.pg_uri,
-               ifnull(f_get_mb_name(gnp_crm_page.pg_mb_emp), '미지정') as mb_emp_name,
-               count(gnp_crm_landing.land_idx) as land_count
-        from gnp_crm_landing
-        join gnp_crm_page on gnp_crm_landing.land_pg_idx = gnp_crm_page.page_idx
-        where gnp_crm_landing.land_ptn_idx = '{$ptn_idx}'
-        and gnp_crm_landing.insert_date2 = '{$date}'
-        and gnp_crm_landing.use_yn = 'Y'
-        group by gnp_crm_landing.land_pg_idx
+        select {$g5['crm_page']}.pg_uri,
+               ifnull(f_get_mb_name({$g5['crm_page']}.pg_mb_emp), '미지정') as mb_emp_name,
+               count({$g5['crm_landing']}.land_idx) as land_count
+        from {$g5['crm_landing']}
+        join {$g5['crm_page']} on {$g5['crm_landing']}.land_pg_idx = {$g5['crm_page']}.page_idx
+        where {$g5['crm_landing']}.land_ptn_idx = '{$ptn_idx}'
+        and {$g5['crm_landing']}.insert_date2 = '{$date}'
+        and {$g5['crm_landing']}.use_yn = 'Y'
+        group by {$g5['crm_landing']}.land_pg_idx
         order by land_count desc
         ";
     } else {
         $detail_pg_uri_sql = "
-        select ifnull(gnp_crm_landing.utm_source, 'N/A') as pg_uri,
-               ifnull(f_get_mb_name(gnp_crm_page.pg_mb_emp), '미지정') as mb_emp_name,
-               count(gnp_crm_landing.land_idx) as land_count
-        from gnp_crm_landing
-        join gnp_crm_page 
-            on gnp_crm_landing.land_pg_idx = gnp_crm_page.page_idx
-        where gnp_crm_landing.land_ptn_idx = '{$ptn_idx}'
-            and gnp_crm_landing.insert_date2 = '{$date}'
-            and gnp_crm_landing.use_yn = 'Y'
-        group by gnp_crm_landing.utm_source, gnp_crm_page.pg_mb_emp
+        select ifnull({$g5['crm_landing']}.utm_source, 'N/A') as pg_uri,
+               ifnull(f_get_mb_name({$g5['crm_page']}.pg_mb_emp), '미지정') as mb_emp_name,
+               count({$g5['crm_landing']}.land_idx) as land_count
+        from {$g5['crm_landing']}
+        join {$g5['crm_page']} 
+            on {$g5['crm_landing']}.land_pg_idx = {$g5['crm_page']}.page_idx
+        where {$g5['crm_landing']}.land_ptn_idx = '{$ptn_idx}'
+            and {$g5['crm_landing']}.insert_date2 = '{$date}'
+            and {$g5['crm_landing']}.use_yn = 'Y'
+        group by {$g5['crm_landing']}.utm_source, {$g5['crm_page']}.pg_mb_emp
         order by land_count desc;
         ";
     }

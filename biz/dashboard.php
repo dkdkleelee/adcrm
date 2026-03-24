@@ -23,7 +23,7 @@ if($whatCurrDept == "3" || $whatCurrDept == "4" || $whatCurrDept == "5" || $what
 $todayVacations = "";
 $sql = "
     SELECT vaca_mb_name, vaca_name
-    FROM gnp_crm_vaca_mng
+    FROM {$g5['crm_vaca_mng']}
     WHERE CURDATE() BETWEEN vaca_start_date AND vaca_end_date
       AND vaca_status = 2
       {$whereCont1}
@@ -42,7 +42,7 @@ while ($row = sql_fetch_array($result)) {
 $tomorrowVacations = "";
 $sqlTomorrow = "
     SELECT vaca_mb_name, vaca_name
-    FROM gnp_crm_vaca_mng
+    FROM {$g5['crm_vaca_mng']}
     WHERE CURDATE() + INTERVAL 1 DAY BETWEEN vaca_start_date AND vaca_end_date
       AND vaca_status = 2
       {$whereCont1}
@@ -63,7 +63,7 @@ $unapprovedVacations = "";
 if ($isAdmin) {
     $sqlUnapproved = "
         SELECT vaca_idx, vaca_mb_name, vaca_name, vaca_start_date
-        FROM gnp_crm_vaca_mng
+        FROM {$g5['crm_vaca_mng']}
         WHERE vaca_status = '1'
           AND vaca_start_date > CURDATE()
           AND vaca_code IN (1, 2, 3)
@@ -94,8 +94,8 @@ $sql = "
            b.ptn_nm, 
            insert_date2, 
            COUNT(*) AS record_count
-    FROM gnp_crm_landing a
-    LEFT JOIN gnp_crm_partner b ON a.land_ptn_idx = b.ptn_idx 
+    FROM {$g5['crm_landing']} a
+    LEFT JOIN {$g5['crm_partner']} b ON a.land_ptn_idx = b.ptn_idx 
     WHERE insert_date2 >= CURDATE() - INTERVAL 7 DAY
       AND land_deptno = {$member['mb_deptno']}
       {$level_cond}
@@ -163,8 +163,8 @@ SELECT
     b.ptn_startday,
     b.ptn_endday,
     b.ptn_memo
-FROM gnp_crm_partner b
-LEFT JOIN gnp_crm_landing a ON a.land_ptn_idx = b.ptn_idx 
+FROM {$g5['crm_partner']} b
+LEFT JOIN {$g5['crm_landing']} a ON a.land_ptn_idx = b.ptn_idx 
 WHERE b.ptn_show_dash = 'Y'
 AND a.use_yn = 'Y' 
 AND a.land_deptno = {$member['mb_deptno']}
@@ -182,8 +182,8 @@ $currentDate = new DateTime();
 $todayMeetings = "";
 $sqlMeetings = "
     SELECT a.meet_startday, a.meet_endday, a.meet_reason, b.mb_name
-    FROM gnp_crm_meet_mng a
-    LEFT JOIN gnp_member b ON a.meet_mb_no = b.mb_no
+    FROM {$g5['crm_meet_mng']} a
+    LEFT JOIN {$g5['member_table']} b ON a.meet_mb_no = b.mb_no
     WHERE a.meet_startday >= CURDATE() 
     AND a.meet_startday < CURDATE() + INTERVAL 1 DAY
     ORDER BY a.meet_startday 
@@ -213,8 +213,8 @@ select
     sum(case when b.insert_date2 = curdate() - interval 4 day then 1 else 0 end) as `day_4`,
     sum(case when b.insert_date2 = curdate() - interval 5 day then 1 else 0 end) as `day_5`,
     sum(case when b.insert_date2 = curdate() - interval 6 day then 1 else 0 end) as `day_6`
-from gnp_crm_partner a
-left join gnp_crm_landing b on b.land_ptn_idx = a.ptn_idx
+from {$g5['crm_partner']} a
+left join {$g5['crm_landing']} b on b.land_ptn_idx = a.ptn_idx
 and b.use_yn = 'Y'
 and b.insert_date2 >= curdate() - interval 6 day
 where b.land_deptno = {$member['mb_deptno']}

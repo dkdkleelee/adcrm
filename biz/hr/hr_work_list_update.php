@@ -57,7 +57,7 @@ if ($act_button === "근태상신") {
         //중복 validation 체크
         $exist_vaca = "
         select count(*) as cnt
-        from gnp_crm_vaca_mng
+        from {$g5['crm_vaca_mng']}
         where ('{$to}' < vaca_end_date AND '{$from}' > vaca_start_date)
         and vaca_code != 5
         and vaca_mb_no = {$member['mb_no']}
@@ -70,7 +70,7 @@ if ($act_button === "근태상신") {
     }
 
     $vaca_sql = "
-    insert into gnp_crm_vaca_mng (vaca_mb_deptno,vaca_mb_no,vaca_mb_name,vaca_code,vaca_name,vaca_status,vaca_comment,vaca_start_date,vaca_end_date,vaca_calc,insert_date, update_date, insert_user, update_user, insert_user_name, update_user_name) values
+    insert into {$g5['crm_vaca_mng']} (vaca_mb_deptno,vaca_mb_no,vaca_mb_name,vaca_code,vaca_name,vaca_status,vaca_comment,vaca_start_date,vaca_end_date,vaca_calc,insert_date, update_date, insert_user, update_user, insert_user_name, update_user_name) values
 	 ({$vaca_mb_deptno},{$vaca_mb_no},'{$vaca_mb_name}','{$vaca_code}','{$vaca_name}','{$vaca_status}','{$vaca_comment}','{$from}','{$to}', {$vaca_calc}, now(), now(), '{$member['mb_id']}', '{$member['mb_id']}', '{$member['mb_name']}', '{$member['mb_name']}' );
     ";
     isSqlError(sql_query($vaca_sql), $vaca_sql);

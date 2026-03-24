@@ -206,7 +206,7 @@ if ($act_button === "업로드") {
         , a.*
     from gnp_kwd_calc_main a
     left join gnp_kwd_calc_charge b on a.calc_naver_id = b.chg_naver_id 
-    left join gnp_member c on b.chg_emp_no = c.mb_no 
+    left join {$g5['member_table']} c on b.chg_emp_no = c.mb_no 
     where 1=1
     and b.chg_emp_no is not null
     and b.chg_emp_no != ''
@@ -229,7 +229,7 @@ if ($act_button === "업로드") {
        , a.*
     from gnp_kwd_calc_main a
     left join gnp_kwd_calc_charge b on a.calc_naver_id = b.chg_naver_id 
-    left join gnp_member c on b.chg_emp_no = c.mb_no 
+    left join {$g5['member_table']} c on b.chg_emp_no = c.mb_no 
     where 1=1
     and (b.chg_emp_no is null or b.chg_emp_no = '')
     {$add_cond}

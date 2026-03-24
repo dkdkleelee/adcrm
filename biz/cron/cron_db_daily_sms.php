@@ -17,9 +17,9 @@ session_start();
 
 $dailySql = "
 select a.land_deptno, c.ptn_nm, count(a.land_idx) as count
-from gnp_crm_landing a
-left join gnp_crm_page b on a.land_pg_idx = b.page_idx
-left join gnp_crm_partner c on a.land_ptn_idx = c.ptn_idx
+from {$g5['crm_landing']} a
+left join {$g5['crm_page']} b on a.land_pg_idx = b.page_idx
+left join {$g5['crm_partner']} c on a.land_ptn_idx = c.ptn_idx
 where date(a.insert_date) = subdate(curdate(), 1)
 and a.use_yn = 'Y'
 and a.land_deptno != 9
@@ -231,7 +231,7 @@ function ins_db_sms($conn, $ret, $receiver, $deptno, $send_msg, $send_sms_cnt){
     file_put_contents("/home/withus/withusCRM/data/log/cron_db_daily_sms.log", "result_code:" . $result_code . "||message:" . $message . "||sms_msg_id:" . $sms_msg_id . "||success_cnt:" . $success_cnt. "||send_sms_cnt:" . $send_sms_cnt  . PHP_EOL, FILE_APPEND | LOCK_EX);
 
     $sms_gubun = "3";
-    $sql = "insert into gnp_crm_sms (sms_gubun, sms_phone, sms_code, sms_deptno, sms_pg_no, sms_result_code, sms_msg_id, sms_send_msg, sms_send_log, insert_date, insert_date2, client_ip) values (?, ?, ?, ?, ?, ?, ?, ?, ?, now(), curdate(), '27.102.82.88')";
+    $sql = "insert into {$g5['crm_sms']} (sms_gubun, sms_phone, sms_code, sms_deptno, sms_pg_no, sms_result_code, sms_msg_id, sms_send_msg, sms_send_log, insert_date, insert_date2, client_ip) values (?, ?, ?, ?, ?, ?, ?, ?, ?, now(), curdate(), '27.102.82.88')";
     $stmt = $conn->prepare($sql);
 
     $result_code_value = ($result_code !== "") ? $result_code : NULL;

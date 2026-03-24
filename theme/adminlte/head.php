@@ -87,7 +87,7 @@ include_once(G5_THEME_PATH . '/head.sub.php');
 //        when timestampdiff(hour, a.me_send_datetime, now()) < 24 then concat(timestampdiff(hour, a.me_send_datetime, now()), ' 시간 전')
 //        else concat(timestampdiff(day, a.me_send_datetime, now()), ' 일 전')
 //      end as time_diff
-//     , (select count(*) from gnp_memo where me_recv_mb_id = '{$member['mb_id']}' and me_read_datetime is null and me_type = 'recv') as total_unread
+//     , (select count(*) from {$g5['memo_table']} where me_recv_mb_id = '{$member['mb_id']}' and me_read_datetime is null and me_type = 'recv') as total_unread
 // from {$g5['memo_table']} a
 // left join {$g5['member_table']} b on a.me_send_mb_id = b.mb_id 
 // where me_recv_mb_id = '{$member['mb_id']}' 

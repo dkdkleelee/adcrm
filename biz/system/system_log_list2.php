@@ -26,8 +26,8 @@ $sql_columns = "
 
 $sql_common = "
 from gnp_record_hist a
-left join gnp_member b on a.hist_mb_no = b.mb_no 
-left join gnp_crm_partner c on b.mb_ptnidx = c.ptn_idx 
+left join {$g5['member_table']} b on a.hist_mb_no = b.mb_no 
+left join {$g5['crm_partner']} c on b.mb_ptnidx = c.ptn_idx 
 ";
 
 $sql_search = "
@@ -84,8 +84,8 @@ $rownum = $total_count - $from_record;
 $emp_sql = "
 select mb_no
      , concat('(',b.ptn_nm , ') ' , a.mb_name) as mb_name  
-  from gnp_member a
-  left join gnp_crm_partner b on a.mb_ptnidx = b.ptn_idx 
+  from {$g5['member_table']} a
+  left join {$g5['crm_partner']} b on a.mb_ptnidx = b.ptn_idx 
  where mb_ptnidx is not null
  order by b.ptn_nm asc
 ";

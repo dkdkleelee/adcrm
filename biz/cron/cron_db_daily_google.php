@@ -19,9 +19,9 @@ $team7_sql = "
 select c.ptn_nm as ptn_nm
      , f_get_mb_name(a.land_empno) as sheet_name
      , count(a.land_idx) as daily_cnt
-from gnp_crm_landing a
-left join gnp_crm_page b on a.land_pg_idx = b.page_idx
-left join gnp_crm_partner c on a.land_ptn_idx = c.ptn_idx
+from {$g5['crm_landing']} a
+left join {$g5['crm_page']} b on a.land_pg_idx = b.page_idx
+left join {$g5['crm_partner']} c on a.land_ptn_idx = c.ptn_idx
 where insert_date2 = '{$yestDt}'
 and a.use_yn = 'Y'
 and a.land_deptno = 7
@@ -31,12 +31,12 @@ union all
 select c.ptn_nm as ptn_nm
      , f_get_mb_name(a.land_empno) as sheet_name
      , 0 as daily_cnt
-from gnp_crm_landing a
-left join gnp_crm_page b on a.land_pg_idx = b.page_idx
-left join gnp_crm_partner c on a.land_ptn_idx = c.ptn_idx
+from {$g5['crm_landing']} a
+left join {$g5['crm_page']} b on a.land_pg_idx = b.page_idx
+left join {$g5['crm_partner']} c on a.land_ptn_idx = c.ptn_idx
 where a.land_empno in (
         select distinct a2.land_empno
-        from gnp_crm_landing a2
+        from {$g5['crm_landing']} a2
         where a2.insert_date2 >= curdate() - interval 7 day
         and a2.use_yn = 'Y'
         and a2.land_deptno = 7
@@ -44,7 +44,7 @@ where a.land_empno in (
 )
 and a.land_ptn_idx in (
 	select distinct a2.land_ptn_idx
-	from gnp_crm_landing a2
+	from {$g5['crm_landing']} a2
 	where a2.insert_date2 >= curdate() - interval 7 day
 	and a2.use_yn = 'Y'
 	and a2.land_deptno = 7
@@ -55,7 +55,7 @@ and a.land_ptn_idx is not null
 and a.insert_date2 >= curdate() - interval 7 day
 and not exists (
     select 1 
-    from gnp_crm_landing a3
+    from {$g5['crm_landing']} a3
     where 
         a3.land_ptn_idx = a.land_ptn_idx
         and a3.land_empno = a.land_empno
@@ -75,8 +75,8 @@ FROM (
     SELECT c.ptn_nm AS ptn_nm
          , '법인' AS ptn_type
          , COUNT(a.land_idx) AS daily_cnt
-    FROM gnp_crm_landing a
-    LEFT JOIN gnp_crm_partner c ON a.land_ptn_idx = c.ptn_idx
+    FROM {$g5['crm_landing']} a
+    LEFT JOIN {$g5['crm_partner']} c ON a.land_ptn_idx = c.ptn_idx
     WHERE insert_date2 = '{$yestDt}'
       AND a.use_yn = 'Y'
       AND a.land_deptno = 6
@@ -87,11 +87,11 @@ FROM (
     SELECT c.ptn_nm AS ptn_nm
          , '법인' AS ptn_type
          , 0 AS daily_cnt
-    FROM gnp_crm_landing a
-    LEFT JOIN gnp_crm_partner c ON a.land_ptn_idx = c.ptn_idx
+    FROM {$g5['crm_landing']} a
+    LEFT JOIN {$g5['crm_partner']} c ON a.land_ptn_idx = c.ptn_idx
     WHERE a.land_empno IN (
             SELECT DISTINCT a2.land_empno
-            FROM gnp_crm_landing a2
+            FROM {$g5['crm_landing']} a2
             WHERE a2.insert_date2 >= CURDATE() - INTERVAL 7 DAY
               AND a2.use_yn = 'Y'
               AND a2.land_deptno = 6
@@ -100,7 +100,7 @@ FROM (
         )
       AND a.land_ptn_idx IN (
             SELECT DISTINCT a2.land_ptn_idx
-            FROM gnp_crm_landing a2
+            FROM {$g5['crm_landing']} a2
             WHERE a2.insert_date2 >= CURDATE() - INTERVAL 7 DAY
               AND a2.use_yn = 'Y'
               AND a2.land_deptno = 6
@@ -112,7 +112,7 @@ FROM (
       AND a.insert_date2 >= CURDATE() - INTERVAL 7 DAY
       AND NOT EXISTS (
           SELECT 1 
-          FROM gnp_crm_landing a3
+          FROM {$g5['crm_landing']} a3
           WHERE a3.land_ptn_idx = a.land_ptn_idx
             AND a3.land_empno = a.land_empno
             AND DATE(a3.insert_date) = '{$yestDt}'
@@ -132,9 +132,9 @@ $team6_except_sql = "
 select c.ptn_nm as ptn_nm,
        f_get_mb_name(a.land_empno) as sheet_name,
        count(a.land_idx) as daily_cnt
-from gnp_crm_landing a
-left join gnp_crm_page b on a.land_pg_idx = b.page_idx
-left join gnp_crm_partner c on a.land_ptn_idx = c.ptn_idx
+from {$g5['crm_landing']} a
+left join {$g5['crm_page']} b on a.land_pg_idx = b.page_idx
+left join {$g5['crm_partner']} c on a.land_ptn_idx = c.ptn_idx
 where insert_date2 = '{$yestDt}'
   and a.use_yn = 'Y'
   and a.land_deptno = 6
@@ -145,16 +145,16 @@ union all
 select c.ptn_nm as ptn_nm,
        f_get_mb_name(a.land_empno) as sheet_name,
        0 as daily_cnt
-from gnp_crm_landing a
-left join gnp_crm_page b on a.land_pg_idx = b.page_idx
-left join gnp_crm_partner c on a.land_ptn_idx = c.ptn_idx
+from {$g5['crm_landing']} a
+left join {$g5['crm_page']} b on a.land_pg_idx = b.page_idx
+left join {$g5['crm_partner']} c on a.land_ptn_idx = c.ptn_idx
 where a.land_empno = 1030
   and a.land_ptn_idx in (166, 458)
   and a.land_deptno = 6
   and a.insert_date2 >= curdate() - interval 7 day
   and not exists (
       select 1 
-      from gnp_crm_landing a3
+      from {$g5['crm_landing']} a3
       where a3.land_ptn_idx = a.land_ptn_idx
         and a3.land_empno = a.land_empno
         and date(a3.insert_date) = '{$yestDt}'
@@ -173,9 +173,9 @@ select
     date(a.insert_date) as insert_date,
     b.pg_uri as pg_uri,
     count(*) as cnt
-from gnp_crm_landing a
-left join gnp_crm_page b on a.land_pg_idx = b.page_idx
-left join gnp_crm_partner c on a.land_ptn_idx = c.ptn_idx
+from {$g5['crm_landing']} a
+left join {$g5['crm_page']} b on a.land_pg_idx = b.page_idx
+left join {$g5['crm_partner']} c on a.land_ptn_idx = c.ptn_idx
 where 
     date(a.insert_date) = date_sub(curdate(), interval 1 day)
     and a.use_yn = 'Y'

@@ -13,7 +13,7 @@ $valid_date = date('Y-m-d H:i:s', strtotime($dateHidden . '+3 minutes'));
 
 $sql = "
 SELECT * 
-  FROM gnp_crm_sms 
+  FROM {$g5['crm_sms']} 
  WHERE sms_idx = {$idxHidden} 
    AND sms_phone = '{$phoneHidden}'
    AND sms_code = '{$auth_code}'

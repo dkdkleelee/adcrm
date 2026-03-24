@@ -34,7 +34,7 @@ $sql_columns = "
 $sql_common = "
 from gnp_kwd_calc_main a
 left join gnp_kwd_calc_charge b on a.calc_naver_id = b.chg_naver_id 
-left join gnp_member c on b.chg_emp_no = c.mb_no 
+left join {$g5['member_table']} c on b.chg_emp_no = c.mb_no 
 ";
 
 $add_cont = "";
@@ -68,7 +68,7 @@ if ($member['mb_deptno'] != "9") {
         } else {
             $add_opt_sql = "
             select *
-              from gnp_member 
+              from {$g5['member_table']} 
              where mb_deptno = 11
              order by mb_name
             ";
@@ -170,7 +170,7 @@ $cnt_sql = "
 select count(*) as cnt
 from gnp_kwd_calc_main a
 left join gnp_kwd_calc_charge b on a.calc_naver_id = b.chg_naver_id 
-left join gnp_member c on b.chg_emp_no = c.mb_no 
+left join {$g5['member_table']} c on b.chg_emp_no = c.mb_no 
 {$sql_search}
 ";
 $row = sql_fetch($cnt_sql);
@@ -242,7 +242,7 @@ $sql_columns2 = "
 $sql_common2 = "
 from gnp_kwd_calc_main a
 left join gnp_kwd_calc_charge b on a.calc_naver_id = b.chg_naver_id 
-left join gnp_member c on b.chg_emp_no = c.mb_no 
+left join {$g5['member_table']} c on b.chg_emp_no = c.mb_no 
 ";
 
 
@@ -251,7 +251,7 @@ $cnt_sql2 = "
 select count(*) as cnt
 from gnp_kwd_calc_main a
 left join gnp_kwd_calc_charge b on a.calc_naver_id = b.chg_naver_id 
-left join gnp_member c on b.chg_emp_no = c.mb_no 
+left join {$g5['member_table']} c on b.chg_emp_no = c.mb_no 
 {$sql_search2}
 ";
 $row2 = sql_fetch($cnt_sql2);

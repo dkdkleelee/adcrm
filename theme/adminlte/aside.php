@@ -108,8 +108,8 @@ for ($i = 0; $row = sql_fetch_array($result); $i++) {
             }
             $today_db_sql = "
             select count(*) as today_cnt
-            from gnp_crm_landing a
-            left join gnp_crm_page b on a.land_pg_idx = b.page_idx 
+            from {$g5['crm_landing']} a
+            left join {$g5['crm_page']} b on a.land_pg_idx = b.page_idx 
             where 1=1 
             {$add_cond}
             and a.insert_date >= curdate()

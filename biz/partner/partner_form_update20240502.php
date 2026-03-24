@@ -373,8 +373,8 @@ if($db_is_ptn_share == "on") {
   select group_concat(b.pg_domain) as pg_domain
        , group_concat(b.pg_uri) as pg_uri
        , count(*) as cnt
-    from gnp_crm_db_share a
-    left join gnp_crm_page b on a.share_child_page_idx = b.page_idx 
+    from {$g5['crm_db_share']} a
+    left join {$g5['crm_page']} b on a.share_child_page_idx = b.page_idx 
     where share_parent_ptn = {$ptn_idx}
     order by share_no
   ";
@@ -437,7 +437,7 @@ if($db_is_ptn_share == "on") {
         }
 
         $ins_sql1 = "
-        insert into gnp_crm_db_share (
+        insert into {$g5['crm_db_share']} (
            share_token
           ,share_no
           ,share_parent_ptn
@@ -479,8 +479,8 @@ if($db_is_ptn_share == "on") {
   //   select group_concat(b.pg_domain) as pg_domain
   //        , group_concat(b.pg_uri) as pg_uri
   //        , count(*) as cnt
-  //     from gnp_crm_db_share a
-  //     left join gnp_crm_page b on a.share_child_page_idx = b.page_idx 
+  //     from {$g5['crm_db_share']} a
+  //     left join {$g5['crm_page']} b on a.share_child_page_idx = b.page_idx 
   //     where share_parent_ptn = {$ptn_idx}
   //     order by share_no
   //   ";
@@ -492,7 +492,7 @@ if($db_is_ptn_share == "on") {
 
   //     $delSql = "
   //     delete 
-  //       from gnp_crm_db_share
+  //       from {$g5['crm_db_share']}
   //     where share_parent_ptn = {$ptn_idx}
   //     ";
   //     isSqlError(sql_query($delSql), $delSql);
@@ -538,7 +538,7 @@ goto_url('partner_list?' . $qstr);
 
 
 //   $ins_sql1 = "
-//   insert into gnp_crm_db_share (
+//   insert into {$g5['crm_db_share']} (
 //      share_token
 //     ,share_parent_ptn
 //     ,share_child_ptn

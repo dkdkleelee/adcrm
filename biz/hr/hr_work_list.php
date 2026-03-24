@@ -41,9 +41,9 @@ select a.*
            when 7 then '토요일'
        end,
        date_format(a.insert_date, ' %h시 %i분')) as insert_date2
-     , b.mb_vaca_cnt - (select count(*) from gnp_crm_vaca_mng sub where sub.vaca_mb_no = {$member['mb_no']} and vaca_status = '3' and sub.vaca_start_date <= last_day(date_format(curdate(), '%y-12-31')) and sub.vaca_end_date >= date_format(curdate(), '%y-01-01')) as total_vaca_cnt
-  from gnp_crm_vaca_mng a
-  left join gnp_member b on a.vaca_mb_no = b.mb_no  
+     , b.mb_vaca_cnt - (select count(*) from {$g5['crm_vaca_mng']} sub where sub.vaca_mb_no = {$member['mb_no']} and vaca_status = '3' and sub.vaca_start_date <= last_day(date_format(curdate(), '%y-12-31')) and sub.vaca_end_date >= date_format(curdate(), '%y-01-01')) as total_vaca_cnt
+  from {$g5['crm_vaca_mng']} a
+  left join {$g5['member_table']} b on a.vaca_mb_no = b.mb_no  
  where $dept_condition
    and vaca_status = 1
    and vaca_end_date >= date_sub(curdate(), interval 3 month)
@@ -140,8 +140,8 @@ select a.*
          when 7 then '토요일'
      end,
      date_format(a.insert_date, ' %h시 %i분')) as insert_date2
-  from gnp_crm_vaca_mng a
-  left join gnp_member b on a.vaca_mb_no = b.mb_no  
+  from {$g5['crm_vaca_mng']} a
+  left join {$g5['member_table']} b on a.vaca_mb_no = b.mb_no  
  where $dept_condition
    and vaca_status = 3
    and vaca_end_date >= date_sub(curdate(), interval 3 month)
@@ -204,8 +204,8 @@ select a.*
          when 7 then '토요일'
      end,
      date_format(a.insert_date, ' %h시 %i분')) as insert_date2
-  from gnp_crm_vaca_mng a
-  left join gnp_member b on a.vaca_mb_no = b.mb_no  
+  from {$g5['crm_vaca_mng']} a
+  left join {$g5['member_table']} b on a.vaca_mb_no = b.mb_no  
  where $dept_condition
    and vaca_status = 2
    and vaca_end_date >= curdate()
@@ -289,8 +289,8 @@ select a.*
          when 7 then '토요일'
      end,
      date_format(a.insert_date, ' %h시 %i분')) as insert_date2
-  from gnp_crm_vaca_mng a
-  left join gnp_member b on a.vaca_mb_no = b.mb_no  
+  from {$g5['crm_vaca_mng']} a
+  left join {$g5['member_table']} b on a.vaca_mb_no = b.mb_no  
  where $dept_condition
    and vaca_code >= 4
    and manager_comment is null
@@ -1146,7 +1146,7 @@ include_once(G5_PATH . '/tail.php');
 
 <!-- 
 
-INSERT INTO gonplan.gnp_crm_vaca_mng (vaca_mb_deptno,vaca_mb_no,vaca_mb_name,vaca_code,vaca_name,vaca_status,vaca_comment,vaca_start_date,vaca_end_date,used_vaca,insert_date,update_date,insert_user,update_user,insert_user_name,update_user_name) VALUES
+INSERT INTO gonplan.{$g5['crm_vaca_mng']} (vaca_mb_deptno,vaca_mb_no,vaca_mb_name,vaca_code,vaca_name,vaca_status,vaca_comment,vaca_start_date,vaca_end_date,used_vaca,insert_date,update_date,insert_user,update_user,insert_user_name,update_user_name) VALUES
 	 (4,25,'김지영','3','오후반차','2','시스템입력','2024-01-02','2024-01-02',0.5,'2024-01-01 00:00:00.000','2024-01-01 00:00:00.000','system','system','관리자','관리자'),
 	 (4,25,'김지영','1','월차','2','시스템입력','2024-01-03','2024-01-03',1.0,'2024-01-01 00:00:00.000','2024-01-01 00:00:00.000','system','system','관리자','관리자'),
 	 (5,4,'박지헌','3','오후반차','2','시스템입력','2024-01-11','2024-01-11',0.5,'2024-01-01 00:00:00.000','2024-01-01 00:00:00.000','system','system','관리자','관리자'),
@@ -1158,9 +1158,9 @@ INSERT INTO gonplan.gnp_crm_vaca_mng (vaca_mb_deptno,vaca_mb_no,vaca_mb_name,vac
 	 (6,34,'권혜준','7','기타','2','여름휴가','2024-01-09','2024-01-09',0.0,'2024-01-01 00:00:00.000','2024-01-01 00:00:00.000','system','system','관리자','관리자'),
 	 (6,283,'최호준','1','월차','2','시스템입력','2024-01-17','2024-01-17',1.0,'2024-01-01 00:00:00.000','2024-01-01 00:00:00.000','system','system','관리자','관리자');
 
--- gonplan.gnp_crm_vaca_mng definition
+-- gonplan.{$g5['crm_vaca_mng']} definition
 
-CREATE TABLE `gnp_crm_vaca_mng` (
+CREATE TABLE `{$g5['crm_vaca_mng']}` (
   `vaca_idx` int(11) NOT NULL AUTO_INCREMENT,
   `vaca_mb_deptno` int(11) DEFAULT NULL,
   `vaca_mb_no` int(11) DEFAULT NULL,

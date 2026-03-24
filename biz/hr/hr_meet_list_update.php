@@ -18,8 +18,8 @@ if ($act_button === "회의실예약") {
 
     $resultOneSql = "
     select meet_idx, meet_mb_no, meet_mb_deptno, meet_startday, meet_endday, meet_reason, insert_date, update_date, insert_user, update_user, insert_user_name, update_user_name, b.mb_name 
-    from gnp_crm_meet_mng a
-    left join gnp_member b on a.meet_mb_no = b.mb_no 
+    from {$g5['crm_meet_mng']} a
+    left join {$g5['member_table']} b on a.meet_mb_no = b.mb_no 
     WHERE ('{$meetingTimeFrom}' < meet_endday AND '{$meetingTimeTo}' > meet_startday)
     ";
     $resultOne = sql_fetch($resultOneSql);
@@ -30,7 +30,7 @@ if ($act_button === "회의실예약") {
     }
 
     $meet_sql = "
-    INSERT INTO gnp_crm_meet_mng (meet_mb_no,meet_mb_deptno,meet_startday,meet_endday,meet_reason,insert_date,update_date,insert_user,update_user,insert_user_name,update_user_name) VALUES
+    INSERT INTO {$g5['crm_meet_mng']} (meet_mb_no,meet_mb_deptno,meet_startday,meet_endday,meet_reason,insert_date,update_date,insert_user,update_user,insert_user_name,update_user_name) VALUES
 	 ({$meet_mb_no},{$mb_deptno},'{$meetingTimeFrom}','{$meetingTimeTo}','{$meetingReason}',now(),now(),'{$mb_id}','{$mb_id}','{$mb_name}','{$mb_name}');
     ";
     isSqlError(sql_query($meet_sql), $meet_sql);
