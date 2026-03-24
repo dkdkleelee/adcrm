@@ -1,0 +1,79 @@
+[ 2026-02-12 23:44:58 ]
+
+    select page_idx
+         , pg_uri
+         , pg_domain
+         , pg_memo
+         , pg_des_idx
+         , pg_deptno
+         , pg_mb_emp
+         , pg_ptn_idx
+         , pg_mb_ptn
+         , f_getcode(b.des_cate_code) as des_cate_code_nm
+         , pg_inflow
+         , pg_title
+         , pg_meta_desc
+         , pg_meta_keyword
+         , pg_redirect_url
+         , pg_alert_msg
+         , pg_popup_img
+         , pg_compnm
+         , pg_reprnm
+         , pg_bznum
+         , pg_addr
+         , pg_tel
+         , pg_email
+         , pg_bef_head
+         , pg_aft_head
+         , pg_add_script
+         , pg_sms_yn
+         , pg_db_sms_yn
+         , pg_db_sms_kind
+         , pg_db_sms_msg
+         , pg_db_user_sms_yn
+         , pg_db_user_sms_msg
+         , pg_aft_pop_yn
+         , pg_aft_pop_cat
+         , pg_aft_pop_sort
+         , pg_aft_pop_title
+         , pg_aft_pop_desc
+         , pg_aft_pop_sdate
+         , pg_aft_pop_edate
+         , pg_aft_pop_file_idx
+         , pg_after_popup_yn
+         , pg_after_popup_cat
+         , pg_api_yn
+         , pg_api_kind
+         , pg_api_url
+         , pg_api_add_param
+         , pg_api_param_way
+         , pg_api_return_way
+         , pg_api_success
+         , pg_api_fail
+         , pg_api_duplicate
+         , google_addr
+         , google_sheet
+         , google_cell
+         , pg_chk_name
+         , pg_chk_data1
+         , pg_chk_data2
+         , pg_chk_data3
+         , pg_chk_data4
+         , pg_chk_data5
+         , pg_chk_data6
+         , pg_chk_data7
+         , pg_chk_data8
+         , pg_chk_data9
+         , pg_chk_code
+         , pg_chk_utm
+         , pg_chk_ip
+         , a.insert_date
+         , a.update_date
+         , a.insert_user
+         , a.update_user
+         , b.design_name
+    from gnp_crm_page a
+    left join gnp_crm_design b on a.pg_des_idx = b.design_idx
+    where page_idx = 1543
+    
+

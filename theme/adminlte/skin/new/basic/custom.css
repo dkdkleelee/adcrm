@@ -1,0 +1,24 @@
+@charset "utf-8";
+
+/* 커스텀 */
+.custom-checkbox { display: inline; }
+
+.list-icon { width: 20px; height: 20px; vertical-align: text-bottom; }
+.view-icon { width: 48px; height: 48px; }
+.comm-icon { width: 48px; height: 48px; }
+
+@media (max-width: 575px)
+{
+	.xs-100 { width: 100%; }
+	.xs-full {
+		width: 100vw;
+		position: relative;
+		/* margin-top: -36px; */
+		margin-left: -50vw;
+		left: 50%;
+	}
+	.xs-full td	{ padding: 8px 18px; }
+
+	.list-icon { width: 18px; height: 18px; vertical-align: text-top; }
+	.comm-icon { width: 24px; height: 24px; }
+}

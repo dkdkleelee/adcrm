@@ -1,0 +1,8 @@
+2023-05-04 05:15:33 \n | ret:duplication | url:http://lottofamily.co.kr/service/public/common/lg_channel_process.php | var_dump:Array
+(
+    [name] => 김길동1
+    [hp] => 010-3691-7903
+    [channel] => GONPLAN
+    [proc] => addChannelMemberGonplan
+)
+

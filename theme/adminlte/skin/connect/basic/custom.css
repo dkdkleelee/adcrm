@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+/* 커스텀 */
+.list-icon { width: 20px; height: 20px; vertical-align: text-bottom; }
+
+@media (max-width: 575px)
+{
+	.xs-full {
+		width: 100vw;
+		position: relative;
+		/* margin-top: -36px; */
+		margin-left: -50vw;
+		left: 50%;
+	}
+	.xs-full td	{ padding: 8px 18px; }
+}

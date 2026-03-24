@@ -1,0 +1,82 @@
+
+    insert IGNORE into gnp_crm_partner (
+        ptn_nm
+       ,cate_code
+       ,ptn_deptno
+       ,ptn_mb_emp
+       ,ptn_phone
+       ,ptn_tel
+       ,ptn_bznm
+       ,ptn_reprnm
+       ,ptn_bznum
+       ,ptn_addr
+       ,ptn_email
+       ,ptn_memo
+       ,ptn_id
+       ,mb_id
+       ,ptn_status
+       ,ptn_status_custom
+       ,ptn_ad_gubun
+       ,ptn_startday
+       ,ptn_endday
+       ,ptn_dposday
+       ,ptn_budget
+       ,ptn_cont_ref
+       ,ptn_db_amount
+       ,ptn_as_amt
+       ,ptn_ntc_useyn
+       ,ptn_ntc_date
+       ,ptn_ntc_pct
+       ,ptn_show_dash 
+       ,ptn_is_upload
+       ,ptn_is_tooltip
+       ,ptn_ban_phone
+       ,isconn
+       ,use_yn
+       ,insert_date
+       ,update_date
+       ,insert_user
+       ,insert_user_name
+       ,update_user
+       ,update_user_name
+  ) VALUES (
+       '동기동기'
+      , 1
+      , 5
+      , 1
+      ,''
+      ,''
+      ,''
+      ,''
+      ,''
+      ,''
+      ,''
+      ,''
+      ,''
+      ,''
+      ,'1'
+      ,'basic'
+      ,'CPA'
+      ,'2026-03-07'
+      ,'2026-04-07'
+      ,''
+      , 0
+      , ''
+      , 0
+      , 0
+      , 'N'
+      , ''
+      , 0
+      , 'N'
+      , 'N'
+      , 'N'
+      , ''
+      , 0
+      ,'Y'
+      ,now()
+      ,now()
+      ,'withus'
+      ,'withus'
+      ,'withus'
+      ,'withus'
+    )
