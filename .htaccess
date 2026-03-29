@@ -25,6 +25,12 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
+
+# biz2/biz3 확장자 없는 URL → .php 자동 연결
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+)$ $1.php [L,QSA]
 RewriteRule ^content/([0-9a-zA-Z_]+)$  main/content.php?co_id=$1&rewrite=1  [QSA,L]
 RewriteRule ^content/([^/]+)/$  main/content.php?co_seo_title=$1&rewrite=1      [QSA,L]
 RewriteRule ^rss/([0-9a-zA-Z_]+)$  main/rss.php?bo_table=$1        [QSA,L]
