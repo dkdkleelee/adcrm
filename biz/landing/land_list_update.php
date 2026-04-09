@@ -47,7 +47,7 @@ if ($act_button === "중복제거") {
     $hist_memo = "{$sql_affected_rows}건 중복제거";
     $ip = $_SERVER["HTTP_CF_CONNECTING_IP"] ?? $_SERVER['REMOTE_ADDR'];
     $record_hist_sql = "
-    insert into gnp_record_hist (hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip) values
+    insert into {$g5['record_hist']} (hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip) values
     ('직원', 'update', '{$member['mb_no']}','{$member['mb_name']}','{$hist_memo}','{$ip}');
     ";
     isSqlError(sql_query($record_hist_sql), $record_hist_sql);

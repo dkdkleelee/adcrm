@@ -25,7 +25,7 @@ $sql_columns = "
 ";
 
 $sql_common = "
-from gnp_record_hist a
+from {$g5['record_hist']} a
 ";
 
 $sql_search = "
@@ -51,7 +51,7 @@ if ($search_function) {
 
 $cnt_sql = " 
 select count(*) as cnt
-from gnp_record_hist a
+from {$g5['record_hist']} a
 {$sql_search}
 ";
 $row = sql_fetch($cnt_sql);

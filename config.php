@@ -110,11 +110,11 @@ if (isset($g5_path['document_root'])) {
 }
 
 if($_SERVER['HTTP_HOST'] == "adcrm.co.kr"){
-    define('G5_LAND_URL',   'http://adcrm.co.kr');
-    define('G5_FILE_URL',   'http://adcrmfile.co.kr');
+    define('G5_LAND_URL',   'http://land.adcrm.co.kr');
+    define('G5_FILE_URL',   'http://file.adcrm.co.kr');
 } else{
-    define('G5_LAND_URL',   'https://land.withusmk.co.kr');
-    define('G5_FILE_URL',   'https://file.withusmk.co.kr');
+    define('G5_LAND_URL',   'https://land.withusmk.co.kr'); //파일서버
+    define('G5_FILE_URL',   'https://file.withusmk.co.kr'); //referer
 }
 
 define('G5_BIZ_URL',        G5_URL.'/'.G5_BIZ_DIR);

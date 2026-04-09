@@ -696,7 +696,7 @@ echo json_encode($result);
         $ip = $_SERVER["HTTP_CF_CONNECTING_IP"] ?? $_SERVER['REMOTE_ADDR'];
 
         $record_hist_sql = "
-        insert into gnp_record_hist (
+        insert into {$g5['record_hist']} (
             hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip
         ) values (
             '직원',
@@ -728,7 +728,7 @@ echo json_encode($result);
         $_SESSION['ss_excel_download_passed_until'] = time() + 180;
 
         $record_hist_sql = "
-        insert into gnp_record_hist (
+        insert into {$g5['record_hist']} (
             hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip
         ) values (
             '직원',
@@ -822,7 +822,7 @@ echo json_encode($result);
     isSqlError(sql_query($sql), $sql);
 
     $record_hist_sql = "
-    insert into gnp_record_hist (
+    insert into {$g5['record_hist']} (
         hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip
     ) values (
         '직원',

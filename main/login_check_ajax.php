@@ -22,7 +22,7 @@ $script_pattern = '/<\s*script\b[^>]*>(.*?)<\s*\/\s*script\s*>/is';
 if (preg_match($pattern, $mb_id) || preg_match($pattern, $mb_password)) {
     $ip = $_SERVER["HTTP_CF_CONNECTING_IP"] ?? $_SERVER['REMOTE_ADDR'];
     $record_hist_sql = "
-    insert into gnp_record_hist (hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip) values
+    insert into {$g5['record_hist']} (hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip) values
     ('직원', 'login', NULL, NULL, '검증되지않은 로그인시도 (로그인실패)','{$ip}');
     ";
     isSqlError(sql_query($record_hist_sql), $record_hist_sql);
@@ -35,7 +35,7 @@ if (preg_match($pattern, $mb_id) || preg_match($pattern, $mb_password)) {
 if (preg_match($script_pattern, $mb_id) || preg_match($script_pattern, $mb_password)) {
     $ip = $_SERVER["HTTP_CF_CONNECTING_IP"] ?? $_SERVER['REMOTE_ADDR'];
     $record_hist_sql = "
-    insert into gnp_record_hist (hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip) values
+    insert into {$g5['record_hist']} (hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip) values
     ('직원', 'login', NULL, NULL, '검증되지않은 로그인시도 (로그인실패)','{$ip}');
     ";
     isSqlError(sql_query($record_hist_sql), $record_hist_sql);
@@ -56,7 +56,7 @@ $mb = get_member($mb_id);
 if (!$mb || empty($mb['mb_no'])) {
     $ip = $_SERVER["HTTP_CF_CONNECTING_IP"] ?? $_SERVER['REMOTE_ADDR'];
     $record_hist_sql = "
-    insert into gnp_record_hist (hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip) values
+    insert into {$g5['record_hist']} (hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip) values
     ('직원', 'login', NULL, NULL, '회원 정보를 찾을 수 없습니다.', '{$ip}');
     ";
     isSqlError(sql_query($record_hist_sql), $record_hist_sql);
@@ -78,7 +78,7 @@ if (function_exists('social_is_login_check')) {
 if (!$is_social_password_check && (! (isset($mb['mb_id']) && $mb['mb_id']) || !login_password_check($mb, $mb_password, $mb['mb_password']))) {
     $ip = $_SERVER["HTTP_CF_CONNECTING_IP"] ?? $_SERVER['REMOTE_ADDR'];
     $record_hist_sql = "
-    insert into gnp_record_hist (hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip) values
+    insert into {$g5['record_hist']} (hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip) values
     ('직원', 'login', '{$mb['mb_no']}','{$mb['mb_name']}','로그인 아이디|비밀번호 다름','{$ip}');
     ";
     isSqlError(sql_query($record_hist_sql), $record_hist_sql);
@@ -205,7 +205,7 @@ if (!in_array($ip, $allowed_ips)) {
 
     $ip = $_SERVER["HTTP_CF_CONNECTING_IP"] ?? $_SERVER['REMOTE_ADDR'];
     $record_hist_sql = "
-    insert into gnp_record_hist (hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip) values
+    insert into {$g5['record_hist']} (hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip) values
     ('직원', 'login', '{$mb['mb_no']}','{$mb['mb_name']}','문자인증시도','{$ip}');
     ";
     isSqlError(sql_query($record_hist_sql), $record_hist_sql);
@@ -236,7 +236,7 @@ set_session('ss_mb_key', md5($mb['mb_datetime'] . get_real_client_ip() . $_SERVE
 if(function_exists('update_auth_session_token')) update_auth_session_token($mb['mb_datetime']);
 
 $record_hist_sql = "
-insert into gnp_record_hist (hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip) values
+insert into {$g5['record_hist']} (hist_join_gubun, hist_function, hist_mb_no, hist_mb_name, hist_detail, client_ip) values
 ('직원', 'login', '{$mb['mb_no']}','{$mb['mb_name']}','로그인성공','{$ip}');
 ";
 isSqlError(sql_query($record_hist_sql), $record_hist_sql);
